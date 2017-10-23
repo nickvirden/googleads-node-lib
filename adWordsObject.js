@@ -17,7 +17,8 @@ function AdWordsObject(options) {
     ADWORDS_REFRESH_TOKEN: process.env.ADWORDS_REFRESH_TOKEN,
     ADWORDS_SECRET: process.env.ADWORDS_SECRET,
     ADWORDS_USER_AGENT: process.env.ADWORDS_USER_AGENT,
-    verbose: false
+    verbose: false,
+    version: 'v201710'
   });
 
   // check if all credentials are supplied
@@ -27,7 +28,8 @@ function AdWordsObject(options) {
     !options.ADWORDS_DEVELOPER_TOKEN ||
     !options.ADWORDS_REFRESH_TOKEN ||
     !options.ADWORDS_SECRET ||
-    !options.ADWORDS_USER_AGENT
+    !options.ADWORDS_USER_AGENT ||
+    !options.version
   ) {
     throw (new Error('googleads-node-lib not configured correctly'));
   }
@@ -36,7 +38,7 @@ function AdWordsObject(options) {
   self.credentials = null;
   self.tokenUrl = 'https://www.googleapis.com/oauth2/v3/token';
   self.verbose = self.options.verbose;
-  self.version = 'v201509';
+  self.version = self.options.version;
 
   self.refresh = function(done) {
     // check if current credentials haven't expired
